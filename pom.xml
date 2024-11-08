@@ -6,7 +6,7 @@
 
     <groupId>aks</groupId>
     <artifactId>gemini-sdk</artifactId>
-    <version>0.1</version>
+    <version>1.0.0</version>
 
 
     <dependencies>
