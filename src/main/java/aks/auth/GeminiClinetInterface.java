@@ -6,8 +6,8 @@ public interface GeminiClinetInterface {
     // GeminiClient geminiAiClient();
     void authenticate(String apiKey);
     String setTextPrompt(String prompt);
-    void setGeminiRequest();
-    void setGeminiRequest(String prompt);
-    String getGeminiResponse();
-    
+    void requestGemini();
+    void requestGemini(String prompt);
+    String responseGemini();
+    String responseJsonGemini();
 }

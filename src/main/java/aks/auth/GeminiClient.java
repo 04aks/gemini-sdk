@@ -39,7 +39,7 @@ public class GeminiClient implements GeminiClinetInterface{
     }
 
     @Override
-    public void setGeminiRequest() {
+    public void requestGemini() {
         RequestBody requestBody = RequestBody.create(getJsonBody(), MediaType.get("application/json"));
         request = new Request.Builder()
             .url(getBase_url())
@@ -47,7 +47,7 @@ public class GeminiClient implements GeminiClinetInterface{
             .build();
     }
     @Override
-    public void setGeminiRequest(String prompt) {
+    public void requestGemini(String prompt) {
         RequestBody requestBody = RequestBody.create(setTextPrompt(prompt), MediaType.get("application/json"));
         request = new Request.Builder()
             .url(getBase_url())
@@ -56,11 +56,27 @@ public class GeminiClient implements GeminiClinetInterface{
     }
 
     @Override
-    public String getGeminiResponse(){
+    public String responseGemini(){
         try(Response response = client.newCall(request).execute()){
 
             if(response.isSuccessful()){
-                return filterJsonText(response.body().string());
+                String result = filterJsonText(response.body().string());
+                return result;
+            }else{
+                return "Might be missing the API key: " + response;
+            }
+        }catch(Exception e){
+            System.out.println("exception " + e);
+        } 
+
+        return null;
+    }
+    @Override
+    public String responseJsonGemini() {
+        try(Response response = client.newCall(request).execute()){
+
+            if(response.isSuccessful()){
+                return response.body().string();
             }else{
                 return "Might be missing the API key: " + response;
             }
