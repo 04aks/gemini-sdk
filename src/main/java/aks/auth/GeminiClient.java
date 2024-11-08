@@ -1,10 +1,7 @@
 package aks.auth;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -63,8 +60,7 @@ public class GeminiClient implements GeminiClinetInterface{
         try(Response response = client.newCall(request).execute()){
 
             if(response.isSuccessful()){
-                setResponse(response);
-                return response.body().string();
+                return filterJsonText(response.body().string());
             }else{
                 return "Might be missing the API key: " + response;
             }
@@ -109,13 +105,5 @@ public class GeminiClient implements GeminiClinetInterface{
 
     private String getBase_url() {
         return base_url;
-    }
-
-
-    public Response getResponse() {
-        return response;
-    }
-    private void setResponse(Response response) {
-        this.response = response;
     }
 }
