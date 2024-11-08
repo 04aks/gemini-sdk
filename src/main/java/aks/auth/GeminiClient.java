@@ -2,6 +2,9 @@ package aks.auth;
 
 import java.io.IOException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -69,6 +72,26 @@ public class GeminiClient implements GeminiClinetInterface{
             System.out.println("exception " + e);
         } 
 
+        return null;
+    }
+
+    public String filterJsonText(String info){
+        ObjectMapper om = new ObjectMapper();
+        try{
+            JsonNode jsonNode = om.readTree(info);
+            if(jsonNode.has("candidates")){
+                JsonNode candidatesJsonNode = jsonNode.get("candidates");
+                if(candidatesJsonNode.isArray()){
+                    JsonNode partsNode = candidatesJsonNode.get(0).get("content").get("parts");
+                    if (partsNode.isArray()) {
+                        return partsNode.get(0).get("text").asText();
+                    }
+                }
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
