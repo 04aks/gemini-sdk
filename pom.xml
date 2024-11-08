@@ -6,7 +6,10 @@
 
     <groupId>aks</groupId>
     <artifactId>gemini-sdk</artifactId>
-    <version>v1.0.1</version>
+    <version>v2.0.0</version>
+    <packaging>jar</packaging>
+
+    <description>A library that allows you to use the Gemini API easily</description>
 
 
     <dependencies>
