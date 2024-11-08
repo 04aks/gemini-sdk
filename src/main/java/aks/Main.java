@@ -14,7 +14,7 @@ public class Main {
 
     public static void test(){
         GeminiClient geminiClient = new GeminiClient();
-        geminiClient.authenticate("AIzaSyAyNyXGFkFc9pI2MOBtKF0PJTitQYmnWbg");
+        // geminiClient.authenticate("AIzaSyAyNyXGFkFc9pI2MOBtKF0PJTitQYmnWbg");
         geminiClient.setGeminiRequest("how do I get rich");
         try {
             geminiClient.getGeminiResponse();

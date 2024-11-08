@@ -1,6 +1,5 @@
 package aks.auth;
 
-import java.io.IOException;
 
 public interface GeminiClinetInterface {
 
@@ -9,6 +8,6 @@ public interface GeminiClinetInterface {
     String setTextPrompt(String prompt);
     void setGeminiRequest();
     void setGeminiRequest(String prompt);
-    void getGeminiResponse() throws IOException;
+    void getGeminiResponse();
     
 }

@@ -56,15 +56,17 @@ public class GeminiClient implements GeminiClinetInterface{
     }
 
     @Override
-    public void getGeminiResponse() throws IOException {
-        Response response = client.newCall(request).execute();
+    public void getGeminiResponse(){
+        try(Response response = client.newCall(request).execute()){
 
-        if(response.isSuccessful()){
-            setResponse(response);
-        }else{
-            System.out.println("error");
-        }
-        
+            if(response.isSuccessful()){
+                setResponse(response);
+            }else{
+                System.out.println("Might be missing the API key: " + response);
+            }
+        }catch(Exception e){
+            System.out.println("exception " + e);
+        } 
     }
 
 
