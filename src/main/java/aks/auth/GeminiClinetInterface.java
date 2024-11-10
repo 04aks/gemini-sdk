@@ -10,4 +10,5 @@ public interface GeminiClinetInterface {
     void requestGemini(String prompt);
     String responseGemini();
     String responseJsonGemini();
+    void geminiBehaviour(String behaviour);
 }

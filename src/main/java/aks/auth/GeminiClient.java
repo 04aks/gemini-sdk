@@ -15,6 +15,7 @@ public class GeminiClient implements GeminiClinetInterface{
     Request request;
     Response response;
     String jsonBody;
+    String testBehaviour;
     String base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
     
     public GeminiClient(){
@@ -32,7 +33,6 @@ public class GeminiClient implements GeminiClinetInterface{
 
     @Override
     public String setTextPrompt(String prompt) {
-        String testBehaviour = " you are an AI chat bot you use humour you are extremely sarcastic but you provide an hobest real response first, you keep answers short";
         String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehaviour + "\"}]}]}";
         setJsonBody(body);
         return body;
@@ -105,6 +105,11 @@ public class GeminiClient implements GeminiClinetInterface{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void geminiBehaviour(String behaviour) {
+        testBehaviour = behaviour;
     }
 
 
