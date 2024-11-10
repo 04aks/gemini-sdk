@@ -37,10 +37,10 @@ To include the Gemini SDK in your Maven project, add the following to your `pom.
 
         // Make a request to the Gemini API
         String prompt = "Write a poem about a lonely robot";
-        String response = geminiClient.requestGemini(prompt);
+        geminiClient.requestGemini(prompt);
 
         // Print the response
-        System.out.println(response);
+        System.out.println(geminiClient.responseGemini());
 
 ```
 
