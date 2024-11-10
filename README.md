@@ -1,8 +1,7 @@
 # Gemini SDK
   A Java SDK for Gemini, to easily integrate the AI model into your java project.
   
-  Contextual AI not available right now, meaning you have to call all methods provided below 
-  each time you ask the AI something.
+  Note: Contextual AI is not available at this time, so each request to Gemini requires calling the methods below individually without retaining context between requests.
 
 ## Integration
 To include the Gemini SDK in your Maven project, add the following to your `pom.xml` file:
