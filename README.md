@@ -4,8 +4,28 @@
   Contextual AI not available right now, meaning you have to call all methods provided below 
   each time you ask the AI something.
 
-## How to Use
+## Integration
+To include the Gemini SDK in your Maven project, add the following to your `pom.xml` file:
+```xml
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+      <dependency>
+            <groupId>com.github.04aks</groupId>
+            <artifactId>gemini-javasdk</artifactId>
+            <version>e3c3bb4f74</version>
+        </dependency>
+    </dependencies>
 ```
+
+## How to Use
+```java
         // Create a GeminiClient instance
         GeminiClient geminiClient = new GeminiClient();
 
@@ -22,4 +42,8 @@
 
         // Print the response
         System.out.println(response);
+
+```
+
+
 
