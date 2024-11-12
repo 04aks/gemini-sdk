@@ -2,6 +2,8 @@ package aks.gemini;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import aks.util.Utils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,6 +21,8 @@ public class GeminiClient implements GeminiClientInterface{
     String base64Image;
     String base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
     
+
+    private Utils util = new Utils();
     public GeminiClient(){
         client = new OkHttpClient();
     }
@@ -34,22 +38,45 @@ public class GeminiClient implements GeminiClientInterface{
 
     @Override
     public String setTextPrompt(String prompt) {
-        String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehavior + "\"},{\"inline_data\": {\"mime_type\":\"image/jpeg\",\"data\":" + "\"" + base64Image + "\"" + "}}]}]}";
+        String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehavior + "\"}]}]}";
         setJsonBody(body);
         return body;
     }
 
     @Override
+    public String setTextPromptWithImage(String prompt, String image) {
+        return "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehavior + "\"},{\"inline_data\": {\"mime_type\":\"image/jpeg\",\"data\":" + "\"" + image + "\"" + "}}]}]}";
+    }
+
+    @Override
+    public String addImage(String path) {
+        return util.encodeImageToBase64(path);
+    }
+
+    @Override
     public void requestGemini() {
-        RequestBody requestBody = RequestBody.create(getJsonBody(), MediaType.get("application/json"));
+        try{
+            RequestBody requestBody = RequestBody.create(getJsonBody(), MediaType.get("application/json"));
+            request = new Request.Builder()
+                .url(getBase_url())
+                .post(requestBody)
+                .build();
+        }catch(Exception e){
+            System.out.println("A prompt wasn't specified.");
+        }
+    }
+    @Override
+    public void requestGemini(String prompt) {
+        RequestBody requestBody = RequestBody.create(setTextPrompt(prompt), MediaType.get("application/json"));
         request = new Request.Builder()
             .url(getBase_url())
             .post(requestBody)
             .build();
     }
+
     @Override
-    public void requestGemini(String prompt) {
-        RequestBody requestBody = RequestBody.create(setTextPrompt(prompt), MediaType.get("application/json"));
+    public void requestGemini(String prompt, String image) {
+        RequestBody requestBody = RequestBody.create(setTextPromptWithImage(prompt, image), MediaType.get("application/json"));
         request = new Request.Builder()
             .url(getBase_url())
             .post(requestBody)
@@ -64,10 +91,10 @@ public class GeminiClient implements GeminiClientInterface{
                 String result = filterJsonText(response.body().string());
                 return result;
             }else{
-                return "Might be missing the API key: " + response;
+                return "Might be missing the API key";
             }
         }catch(Exception e){
-            System.out.println("exception " + e);
+            System.out.println("Couldn't print the result!");
         } 
 
         return null;

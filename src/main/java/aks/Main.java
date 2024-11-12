@@ -17,9 +17,8 @@ public class Main {
         GeminiClient geminiClient = new GeminiClient();
         geminiClient.authenticate(System.getenv("GEMINI-KEY")); // [String] Put your Gemini API key here
         geminiClient.geminiBehavior(""); // [String] Set the AI's behavior here
-        geminiClient.setBase64Image(utils.encodeImageToBase64("src\\main\\java\\aks\\res\\bigger.jpg"));
-        geminiClient.requestGemini("can you read the image?"); // [String] Write what you are asking the AI here
-        
+        // geminiClient.setBase64Image(utils.encodeImageToBase64("src\\main\\java\\aks\\res\\bigger.jpg"));
+        geminiClient.requestGemini("make a color pallette from this image, total of 3 colors", geminiClient.addImage("src\\main\\java\\aks\\res\\bigger.jpg")); // [String] Write what you are asking the AI here
         
         System.out.println(geminiClient.responseGemini()); // This types the result.
     }
