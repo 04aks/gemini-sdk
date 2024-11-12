@@ -18,7 +18,7 @@ To include the Gemini SDK in your Maven project, add the following to your `pom.
       <dependency>
             <groupId>com.github.04aks</groupId>
             <artifactId>gemini-javasdk</artifactId>
-            <version>1.0</version>
+            <version>2.1</version>
         </dependency>
     </dependencies>
 ```
