@@ -70,5 +70,5 @@ To include the Gemini SDK in your Maven project, add the following to your `pom.
 
 ```
 
-##The Main class is for testing purposes only, it has no significant role in the SDK's functionality.
+### The Main class is for testing purposes only, it has no significant role in the SDK's functionality.
 
