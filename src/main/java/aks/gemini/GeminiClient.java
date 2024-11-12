@@ -34,7 +34,7 @@ public class GeminiClient implements GeminiClientInterface{
 
     @Override
     public String setTextPrompt(String prompt) {
-        String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehavior + "\"},{\"inline_data\": {\"mime_type\":\"image/jpeg\",\"data\":" + base64Image + "}}]}]}";
+        String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehavior + "\"},{\"inline_data\": {\"mime_type\":\"image/jpeg\",\"data\":" + "\"" + base64Image + "\"" + "}}]}]}";
         setJsonBody(body);
         return body;
     }
@@ -127,5 +127,9 @@ public class GeminiClient implements GeminiClientInterface{
 
     private String getBase_url() {
         return base_url;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 }
