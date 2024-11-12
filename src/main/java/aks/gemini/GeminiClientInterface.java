@@ -1,7 +1,7 @@
-package aks.auth;
+package aks.gemini;
 
 
-public interface GeminiClinetInterface {
+public interface GeminiClientInterface {
 
     // GeminiClient geminiAiClient();
     void authenticate(String apiKey);
@@ -10,5 +10,5 @@ public interface GeminiClinetInterface {
     void requestGemini(String prompt);
     String responseGemini();
     String responseJsonGemini();
-    void geminiBehaviour(String behaviour);
+    void geminiBehavior(String behavior);
 }

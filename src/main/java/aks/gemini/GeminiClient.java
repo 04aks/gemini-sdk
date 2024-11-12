@@ -1,4 +1,4 @@
-package aks.auth;
+package aks.gemini;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,14 +8,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class GeminiClient implements GeminiClinetInterface{
+public class GeminiClient implements GeminiClientInterface{
 
 
     OkHttpClient client;
     Request request;
     Response response;
     String jsonBody;
-    String testBehaviour;
+    String testBehavior;
+    String base64Image;
     String base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
     
     public GeminiClient(){
@@ -33,7 +34,7 @@ public class GeminiClient implements GeminiClinetInterface{
 
     @Override
     public String setTextPrompt(String prompt) {
-        String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehaviour + "\"}]}]}";
+        String body = "{\"contents\":[{\"parts\":[{\"text\":\""+ prompt + testBehavior + "\"},{\"inline_data\": {\"mime_type\":\"image/jpeg\",\"data\":" + base64Image + "}}]}]}";
         setJsonBody(body);
         return body;
     }
@@ -108,8 +109,8 @@ public class GeminiClient implements GeminiClinetInterface{
     }
 
     @Override
-    public void geminiBehaviour(String behaviour) {
-        testBehaviour = behaviour;
+    public void geminiBehavior(String behavior) {
+        testBehavior = behavior;
     }
 
 
