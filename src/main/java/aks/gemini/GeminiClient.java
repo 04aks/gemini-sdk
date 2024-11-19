@@ -94,7 +94,7 @@ public class GeminiClient implements GeminiClientInterface{
                 return "Might be missing the API key";
             }
         }catch(Exception e){
-            System.out.println("Couldn't print the result!");
+            System.out.println("gemini failed Response: " + e);
         } 
 
         return null;
