@@ -75,8 +75,9 @@ public class GeminiClient implements GeminiClientInterface{
     }
 
     @Override
-    public void requestGemini(String prompt, String image) {
-        RequestBody requestBody = RequestBody.create(setTextPromptWithImage(prompt, image), MediaType.get("application/json"));
+    public void requestGemini(String prompt, String image_path) {
+        String imageInBase64 = util.encodeImageToBase64(image_path);
+        RequestBody requestBody = RequestBody.create(setTextPromptWithImage(prompt, imageInBase64), MediaType.get("application/json"));
         request = new Request.Builder()
             .url(getBase_url())
             .post(requestBody)
@@ -94,7 +95,8 @@ public class GeminiClient implements GeminiClientInterface{
                 return "Might be missing the API key";
             }
         }catch(Exception e){
-            System.out.println("gemini failed Response: " + e);
+            System.out.println("gemini failed Response: ");
+            e.printStackTrace();
         } 
 
         return null;
