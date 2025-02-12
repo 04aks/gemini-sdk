@@ -7,7 +7,7 @@ import java.util.Base64;
 
 public class Utils {
     
-    public String encodeImageToBase64(String path){
+    public static String encodeImageToBase64(String path){
 
         try {
             byte[] bytes = Files.readAllBytes(Paths.get(path));

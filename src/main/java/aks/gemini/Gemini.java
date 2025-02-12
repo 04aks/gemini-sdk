@@ -10,10 +10,55 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Gemini implements GeminiClientInterface{
+    public static class Builder{
+        private String url;
+        private String key;
+        private String prompt;
+        public Builder(String url, String key){
+            this.url = url;
+            this.key = key;
+        }
+
+        public Builder prompt(String text, String imagePath){
+            String image = Utils.encodeImageToBase64(imagePath);
+            JSONObject inlinePart = new JSONObject()
+            .put("mime_type", "image/jpeg")
+            .put("data", image);
+
+            JSONObject textObject = new JSONObject()
+            .put("text", text);
+
+            JSONObject part = new JSONObject()
+            .put("parts", new JSONArray().put(textObject).put(new JSONObject().put("inline_data", inlinePart)));
+
+            JSONObject root = new JSONObject()
+            .put("contents", new JSONArray().put(part));
+
+            this.prompt = root.toString();
+            return this;
+        }
+        public Builder prompt(String text){
+
+            JSONObject textObject = new JSONObject()
+            .put("text", text);
+
+            JSONObject part = new JSONObject()
+            .put("parts", new JSONArray().put(textObject));
+
+            JSONObject root = new JSONObject()
+            .put("contents", new JSONArray().put(part));
+
+            this.prompt = root.toString();
+            return this;
+        }
+
+        public Gemini build()
+            { return new Gemini(this);}
+    }
+
     private String url;
     private String key;
     private String prompt;
-    private Utils utils = new Utils();
     private OkHttpClient client = new OkHttpClient();
 
     private Gemini(Builder builder){
@@ -35,66 +80,15 @@ public class Gemini implements GeminiClientInterface{
     private String link(){
         return getUrl() + getKey();
     }
-    private String buildPrompt(String text, String imagePath){
-
-        String image = utils.encodeImageToBase64(imagePath);
-        JSONObject inlinePart = new JSONObject()
-        .put("mime_type", "image/jpeg")
-        .put("data", image);
-
-        JSONObject textObject = new JSONObject()
-        .put("text", text);
-
-        JSONObject part = new JSONObject()
-        .put("parts", new JSONArray().put(textObject).put(new JSONObject().put("inline_data", inlinePart)));
-
-        JSONObject root = new JSONObject()
-        .put("contents", new JSONArray().put(part));
-
-        return root.toString();
-    }
-
-
-    public static class Builder{
-        private String url;
-        private String key;
-        private String prompt;
-        // private String imagePath;
-
-        public Builder url(String url){
-            this.url = url;
-            return this;
-        }
-
-        public Builder authenticate(String key){
-            this.key = key;
-            return this;
-        }
-
-        public Builder prompt(String prompt){
-            this.prompt = prompt;
-            return this;
-        }
-
-        public Gemini build(){
-            if(url.isEmpty() || url == null || key.isEmpty() || key == null){
-                return null;
-            }
-
-            return new Gemini(this);
-        }
-    }
-
-
 
     @Override
     public void requestGemini(String prompt) {
     }
 
     @Override
-    public void requestGemini(String prompt, String imagePath) {
+    public void requestGemini() {
         try{
-            RequestBody requestBody = RequestBody.create(buildPrompt(prompt, imagePath), MediaType.parse("application/json"));
+            RequestBody requestBody = RequestBody.create(prompt, MediaType.parse("application/json"));
             Request request = new Request.Builder()
                 .url(link())
                 .post(requestBody)
@@ -103,26 +97,15 @@ public class Gemini implements GeminiClientInterface{
                 System.out.println(response.body().string());
                 
             }catch(Exception e){
-                e.printStackTrace();
+                System.out.println("Something went wrong while making the call");
             }
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println("Gotta add a prompt Broski!");
         }
     }
-
-    // @Override
-    // public String responseGemini() {
-    // }
-
-    // @Override
-    // public String responseJsonGemini() {
-    // }
 
     @Override
     public void geminiBehavior(String behavior) {
     }
 
-    // @Override
-    // public String addImage(String path) {
-    // }
 }
