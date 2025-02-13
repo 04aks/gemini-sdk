@@ -1,5 +1,8 @@
 package aks.gemini;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import aks.util.Utils;
@@ -19,17 +22,32 @@ public class Gemini implements GeminiClientInterface{
             this.key = key;
         }
 
-        public Builder prompt(String text, String imagePath){
-            String image = Utils.encodeImageToBase64(imagePath);
-            JSONObject inlinePart = new JSONObject()
-            .put("mime_type", "image/jpeg")
-            .put("data", image);
+        public Builder prompt(String text, List<String> imagePath){
+            
+            List<JSONObject> inlineParts = new ArrayList<>();
+            for(String img : imagePath){
+
+                String image = Utils.encodeImageToBase64(img);
+
+                JSONObject object = new JSONObject()
+                .put("mime_type", "image/jpeg")
+                .put("data", image);
+
+                inlineParts.add(object);
+            }
 
             JSONObject textObject = new JSONObject()
             .put("text", text);
 
+
+            JSONArray array = new JSONArray();
+            array.put(textObject);
+            for(JSONObject obj : inlineParts){
+                array.put(new JSONObject().put("inline_data", obj));
+            }
             JSONObject part = new JSONObject()
-            .put("parts", new JSONArray().put(textObject).put(new JSONObject().put("inline_data", inlinePart)));
+            .put("parts", array);
+
 
             JSONObject root = new JSONObject()
             .put("contents", new JSONArray().put(part));
