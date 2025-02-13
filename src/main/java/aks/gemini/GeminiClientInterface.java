@@ -4,6 +4,6 @@ package aks.gemini;
 public interface GeminiClientInterface {
 
     void requestGemini(String prompt);
-    void requestGemini();
+    String requestGemini();
     void geminiBehavior(String behavior);
 }

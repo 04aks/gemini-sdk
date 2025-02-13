@@ -19,7 +19,7 @@ public class Main {
         links.add("src\\main\\java\\aks\\res\\dave.jpg");
 
         Gemini gemini = new Gemini.Builder(Links.GEMINI_1dot5_FLASH, System.getenv("GEMINI-KEY-2"))
-        .prompt("can you tell the gender of these people?", links)
+        .prompt("do you remember what I just asked yo ua minute ago?")
         .build();
         gemini.requestGemini();
         

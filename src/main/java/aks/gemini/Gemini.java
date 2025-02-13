@@ -104,7 +104,7 @@ public class Gemini implements GeminiClientInterface{
     }
 
     @Override
-    public void requestGemini() {
+    public String requestGemini() {
         try{
             RequestBody requestBody = RequestBody.create(prompt, MediaType.parse("application/json"));
             Request request = new Request.Builder()
@@ -112,7 +112,7 @@ public class Gemini implements GeminiClientInterface{
                 .post(requestBody)
                 .build();
             try(Response response = client.newCall(request).execute()){
-                System.out.println(response.body().string());
+                return response.body().string();
                 
             }catch(Exception e){
                 System.out.println("Something went wrong while making the call");
@@ -120,6 +120,8 @@ public class Gemini implements GeminiClientInterface{
         }catch(Exception e){
             System.out.println("Gotta add a prompt Broski!");
         }
+
+        return null;
     }
 
     @Override
